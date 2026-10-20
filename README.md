@@ -34,3 +34,7 @@ git clone https://codeberg.org/friedrice/ComfyUI-PadToSquare.git
 ```
 
 Restart ComfyUI. There are no extra dependencies.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
