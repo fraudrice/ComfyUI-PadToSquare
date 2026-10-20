@@ -1,0 +1,21 @@
+[project]
+name = "padtosquare"
+description = "Pads an image to a square by extending its shorter side, with an optional longest-side resize, and outputs a mask of the original image area for cropping it back out."
+version = "1.0.0"
+license = { file = "LICENSE" }
+dependencies = []
+classifiers = [
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Repository = "https://codeberg.org/friedrice/ComfyUI-PadToSquare"
+#  Used by Comfy Registry https://registry.comfy.org
+Documentation = "https://codeberg.org/friedrice/ComfyUI-PadToSquare#readme"
+"Bug Tracker" = "https://codeberg.org/friedrice/ComfyUI-PadToSquare/issues"
+
+[tool.comfy]
+PublisherId = "friedrice"
+DisplayName = "ComfyUI-PadToSquare"
+Icon = ""
+includes = []
