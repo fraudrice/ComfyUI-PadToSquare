@@ -62,10 +62,64 @@ class PadImageToSquare:
         return (padded, mask)
 
 
+class CropImageByMask:
+    """
+    Crops an image to the bounding box of a mask, e.g. the inverted_mask from Pad Image To Square,
+    to cut the original image back out of the square. Modelled on KJNodes' Image Crop By Mask
+    (https://github.com/kijai/ComfyUI-KJNodes). If the mask and image differ in size, the box is
+    scaled to the image, so the image can be resized between padding and cropping.
+    """
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "image": ("IMAGE",),
+                "mask": ("MASK",),
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("image",)
+    OUTPUT_TOOLTIPS = ("The image cropped to the area where the mask is above 0.5.",)
+    FUNCTION = "crop"
+    CATEGORY = "image/transform"
+    DESCRIPTION = "Crops an image to the bounding box of a mask, scaling the box if the mask and image sizes differ."
+
+    def crop(self, image, mask):
+        batch, height, width, _ = image.shape
+        if mask.dim() == 2:
+            mask = mask.unsqueeze(0)
+        mask_height, mask_width = mask.shape[-2:]
+
+        crops = []
+        for i in range(batch):
+            area = mask[min(i, mask.shape[0] - 1)] > 0.5
+            rows = torch.nonzero(area.any(dim=1)).flatten()
+            cols = torch.nonzero(area.any(dim=0)).flatten()
+            if rows.numel() == 0:
+                # Empty mask: nothing to crop to, keep the whole image.
+                crops.append(image[i])
+                continue
+
+            top = round(rows[0].item() * height / mask_height)
+            bottom = round((rows[-1].item() + 1) * height / mask_height)
+            left = round(cols[0].item() * width / mask_width)
+            right = round((cols[-1].item() + 1) * width / mask_width)
+            crops.append(image[i, top:bottom, left:right, :])
+
+        if any(crop.shape != crops[0].shape for crop in crops):
+            raise ValueError("Masks in the batch produce crops of different sizes, which cannot be batched together.")
+
+        return (torch.stack(crops),)
+
+
 NODE_CLASS_MAPPINGS = {
     "PadImageToSquare": PadImageToSquare,
+    "PadToSquareCropByMask": CropImageByMask,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "PadImageToSquare": "Pad Image To Square",
+    "PadToSquareCropByMask": "Crop Image By Mask (PadToSquare)",
 }

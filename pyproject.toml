@@ -1,7 +1,7 @@
 [project]
 name = "padtosquare"
-description = "Pads an image to a square by extending its shorter side, with an optional longest-side resize, and outputs a mask of the original image area for cropping it back out."
-version = "1.0.1"
+description = "Pads an image to a square by extending its shorter side, with an optional longest-side resize, and crops the original image back out with the mask it outputs."
+version = "1.1.0"
 license = "MIT"
 dependencies = []
 classifiers = [
