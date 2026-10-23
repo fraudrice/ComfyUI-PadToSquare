@@ -50,7 +50,7 @@ by kijai, which works as a drop-in alternative. It is a separate implementation,
 
 ```bash
 cd ComfyUI/custom_nodes
-git clone https://codeberg.org/friedrice/ComfyUI-PadToSquare.git
+git clone https://github.com/fraudrice/ComfyUI-PadToSquare.git
 ```
 
 Restart ComfyUI. There are no extra dependencies.

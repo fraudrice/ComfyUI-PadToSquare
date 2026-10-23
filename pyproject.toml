@@ -9,10 +9,10 @@ classifiers = [
 ]
 
 [project.urls]
-Repository = "https://codeberg.org/friedrice/ComfyUI-PadToSquare"
+Repository = "https://github.com/fraudrice/ComfyUI-PadToSquare"
 #  Used by Comfy Registry https://registry.comfy.org
-Documentation = "https://codeberg.org/friedrice/ComfyUI-PadToSquare#readme"
-"Bug Tracker" = "https://codeberg.org/friedrice/ComfyUI-PadToSquare/issues"
+Documentation = "https://github.com/fraudrice/ComfyUI-PadToSquare#readme"
+"Bug Tracker" = "https://github.com/fraudrice/ComfyUI-PadToSquare/issues"
 
 [tool.comfy]
 PublisherId = "friedrice"
